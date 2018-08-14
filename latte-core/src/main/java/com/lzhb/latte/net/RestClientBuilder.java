@@ -35,6 +35,9 @@ public class RestClientBuilder {
     private Context mContext;
     private LoaderStyle mLoaderStyle;
     private File mFile;
+    private String mDownload_dir;
+    private String mExtension;
+    private String mName;
 
     RestClientBuilder() {
 
@@ -67,6 +70,21 @@ public class RestClientBuilder {
 
     public final RestClientBuilder raw(String raw) {
         this.mBody = RequestBody.create(MediaType.parse("application/json;charset=UTF-8"), raw);
+        return this;
+    }
+
+    public final RestClientBuilder dir(String dir) {
+        this.mDownload_dir = dir;
+        return this;
+    }
+
+    public final RestClientBuilder extentsion(String extension) {
+        this.mExtension = extension;
+        return this;
+    }
+
+    public final RestClientBuilder name(String name) {
+        this.mName = name;
         return this;
     }
 
@@ -103,6 +121,6 @@ public class RestClientBuilder {
     }
 
     public final RestClient build() {
-        return new RestClient(mUrl, PARAMS, mRequest, mSuccess, mFailure, mError, mBody, mFile, mContext, mLoaderStyle);
+        return new RestClient(mUrl, PARAMS, mDownload_dir, mExtension, mName, mRequest, mSuccess, mFailure, mError, mBody, mFile, mContext, mLoaderStyle);
     }
 }

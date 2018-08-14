@@ -9,6 +9,7 @@ import com.lzhb.latte.net.callback.IFailure;
 import com.lzhb.latte.net.callback.IRequest;
 import com.lzhb.latte.net.callback.ISuccess;
 import com.lzhb.latte.net.callback.RequestCallbacks;
+import com.lzhb.latte.net.download.DownLoadHandler;
 import com.lzhb.latte.ui.LatteLoader;
 import com.lzhb.latte.ui.LoaderStyle;
 
@@ -32,6 +33,9 @@ import retrofit2.Callback;
 public class RestClient {
     private final String URL;
     private final WeakHashMap<String, Object> PARAMS = RestCreator.getParams();
+    private final String DOWNLOAD_DIR;
+    private final String EXTENSION;
+    private final String NAME;
     private final IRequest REQUEST;
     private final ISuccess SUCCESS;
     private final IFailure FAILURE;
@@ -42,10 +46,14 @@ public class RestClient {
     private final Context CONTEXT;
 
     public RestClient(String url, Map<String, Object> params,
+                      String download_dir, String extension, String name,
                       IRequest request, ISuccess success, IFailure failure, IError error,
                       RequestBody body, File file, Context context, LoaderStyle loaderStyle) {
         this.URL = url;
         this.PARAMS.putAll(params);
+        this.DOWNLOAD_DIR = download_dir;
+        this.EXTENSION = extension;
+        this.NAME = name;
         this.REQUEST = request;
         this.SUCCESS = success;
         this.FAILURE = failure;
@@ -90,8 +98,8 @@ public class RestClient {
                 break;
             case UPLOAD:
                 final RequestBody requestBody = RequestBody.create(MediaType.parse(MultipartBody.FORM.toString()), FILE);
-                final MultipartBody.Part body = MultipartBody.Part.createFormData("file", FILE.getName(),requestBody);
-                call = service.upload(URL,body);
+                final MultipartBody.Part body = MultipartBody.Part.createFormData("file", FILE.getName(), requestBody);
+                call = service.upload(URL, body);
                 break;
             default:
                 break;
@@ -133,5 +141,13 @@ public class RestClient {
 
     public final void delete() {
         request(HttpMethod.DELETE);
+    }
+
+    public final void upload() {
+        request(HttpMethod.UPLOAD);
+    }
+
+    public final void download() {
+        new DownLoadHandler(URL, DOWNLOAD_DIR, EXTENSION, NAME, REQUEST, SUCCESS, FAILURE, ERROR).handleDownLoad();
     }
 }

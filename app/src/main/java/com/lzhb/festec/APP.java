@@ -14,6 +14,7 @@ public class APP extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        //测试
         Latte.init(this)
                 .withApiHost("https://www.baidu.com/")
                 .configure();

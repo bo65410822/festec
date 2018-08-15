@@ -14,7 +14,6 @@ import com.lzhb.latte.net.callback.ISuccess;
 import com.lzhb.latte.net.rx.RxRestClient;
 
 import io.reactivex.Observer;
-import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;

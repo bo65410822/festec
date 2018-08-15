@@ -18,7 +18,7 @@ public class APP extends Application {
         //测试    http://192.168.0.69:8080/index.jsp
         Latte.init(this)
                 .withApiHost("http://192.168.0.69:8080/")
-                .withInterceptor(new DebugInterceptor("index.jsp", R.raw.test))
+//                .withInterceptor(new DebugInterceptor("index.jsp", R.raw.test))
                 .configure()
         ;
     }

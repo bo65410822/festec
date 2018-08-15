@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.lzhb.latte.app.ConfigKeys;
 import com.lzhb.latte.app.Latte;
+import com.lzhb.latte.net.rx.RxRestService;
 
 import java.util.ArrayList;
 import java.util.WeakHashMap;
@@ -13,6 +14,7 @@ import java.util.concurrent.TimeUnit;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 /**
@@ -36,12 +38,6 @@ public class RestCreator {
         return ParamsHolder.PARAMS;
     }
 
-    /**
-     * @return 返回 RestService 接口的对象（retrofit）
-     */
-    public static RestService getRestService() {
-        return RestServiceHolder.REST_SERVICE;
-    }
 
     /**
      * 构建 retrofit
@@ -52,6 +48,7 @@ public class RestCreator {
                 .baseUrl(BASE_URL)
                 .client(OKHttpHolder.OK_HTTP_CLIENT)
                 .addConverterFactory(ScalarsConverterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
     }
 
@@ -79,9 +76,24 @@ public class RestCreator {
     }
 
     /**
-     * 单利 RestService 对象
+     * @return 返回 RestService 接口的对象（retrofit）
      */
+    public static RestService getRestService() {
+        return RestServiceHolder.REST_SERVICE;
+    }
+
     private static final class RestServiceHolder {
         private static final RestService REST_SERVICE = RetrofitHolder.RETROFIT_CLIENT.create(RestService.class);
+    }
+
+    /**
+     * @return RxRestService 接口（rxjava + retrofit）
+     */
+    public static RxRestService getRxRestService() {
+        return RxRestServiceHolder.REST_SERVICE;
+    }
+
+    private static final class RxRestServiceHolder {
+        private static final RxRestService REST_SERVICE = RetrofitHolder.RETROFIT_CLIENT.create(RxRestService.class);
     }
 }

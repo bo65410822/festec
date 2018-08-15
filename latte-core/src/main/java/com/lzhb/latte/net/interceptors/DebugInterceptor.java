@@ -3,7 +3,7 @@ package com.lzhb.latte.net.interceptors;
 import android.support.annotation.RawRes;
 import android.util.Log;
 
-import com.lzhb.latte.util.FileUtil;
+import com.lzhb.latte.util.file.FileUtil;
 
 import java.io.IOException;
 

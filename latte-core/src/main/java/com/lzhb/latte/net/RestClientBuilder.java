@@ -15,7 +15,6 @@ import java.util.WeakHashMap;
 
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
-import okhttp3.ResponseBody;
 
 /**
  * author: Lzhb
@@ -43,26 +42,41 @@ public class RestClientBuilder {
 
     }
 
+    /**
+     * 设置服务器地址url
+     */
     public final RestClientBuilder url(String url) {
         this.mUrl = url;
         return this;
     }
 
+    /**
+     * 设置请求参数 WeakHashMap类型
+     */
     public final RestClientBuilder param(WeakHashMap<String, Object> params) {
         this.PARAMS.putAll(params);
         return this;
     }
 
+    /**
+     * 设置请求参数 （键 - 值）
+     */
     public final RestClientBuilder param(String key, Object value) {
         this.PARAMS.put(key, value);
         return this;
     }
 
+    /**
+     * 设置文件
+     */
     public final RestClientBuilder file(File file) {
         this.mFile = file;
         return this;
     }
 
+    /**
+     * 设置文件的路径
+     */
     public final RestClientBuilder file(String file) {
         this.mFile = new File(file);
         return this;

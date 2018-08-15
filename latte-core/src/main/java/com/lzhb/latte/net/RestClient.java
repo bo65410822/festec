@@ -2,8 +2,6 @@ package com.lzhb.latte.net;
 
 import android.content.Context;
 
-import com.lzhb.latte.app.Latte;
-import com.lzhb.latte.delegates.LatteDelegate;
 import com.lzhb.latte.net.callback.IError;
 import com.lzhb.latte.net.callback.IFailure;
 import com.lzhb.latte.net.callback.IRequest;
@@ -20,7 +18,6 @@ import java.util.WeakHashMap;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 

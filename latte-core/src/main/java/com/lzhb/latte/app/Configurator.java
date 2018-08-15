@@ -1,6 +1,9 @@
 package com.lzhb.latte.app;
 
-import java.util.WeakHashMap;
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import okhttp3.Interceptor;
 
 /**
  * author: Lzhb
@@ -9,44 +12,94 @@ import java.util.WeakHashMap;
  */
 
 public class Configurator {
-    private static final WeakHashMap<String, Object> LATTE_CONFIGS = new WeakHashMap<>();
 
+    private static final HashMap<Object, Object> LATTE_CONFIGS = new HashMap<>();
+    private static final ArrayList<Interceptor> INTERCEPTORS = new ArrayList<>();
 
-    public static Configurator getInstance() {
-        return Hodler.INSTANCE;
+    /**
+     * @return 获取单利
+     */
+    static Configurator getInstance() {
+        return Holder.INSTANCE;
     }
 
-    final WeakHashMap<String, Object> getLatteConfigs() {
+    /**
+     * @return 返回配置信息的HashMap 只能在同一包下调用
+     */
+    final HashMap<Object, Object> getLatteConfigs() {
         return LATTE_CONFIGS;
     }
 
     private Configurator() {
-        LATTE_CONFIGS.put(ConfigType.CONFIG_READY.name(), false);
+        //默认没有完成配置
+        LATTE_CONFIGS.put(ConfigKeys.CONFIG_READY.name(), false);
     }
 
-    private static class Hodler {
+    private static class Holder {
         private static final Configurator INSTANCE = new Configurator();
     }
 
+    /**
+     * 在初始化配置时候调用该方法，否则会抛出异常
+     */
     public final void configure() {
-        LATTE_CONFIGS.put(ConfigType.CONFIG_READY.name(), true);
+        LATTE_CONFIGS.put(ConfigKeys.CONFIG_READY.name(), true);
     }
 
+    /**
+     * 配置服务器的host
+     *
+     * @param host 域名
+     * @return
+     */
     public final Configurator withApiHost(String host) {
-        LATTE_CONFIGS.put(ConfigType.API_HOST.name(), host);
+        LATTE_CONFIGS.put(ConfigKeys.API_HOST.name(), host);
         return this;
     }
 
+    /**
+     * 添加一个拦截器
+     *
+     * @param interceptor 拦截器
+     * @return
+     */
+    public final Configurator withInterceptor(Interceptor interceptor) {
+        INTERCEPTORS.add(interceptor);
+        LATTE_CONFIGS.put(ConfigKeys.INTERCEPTOR, INTERCEPTORS);
+        return this;
+    }
+
+    /**
+     * 添加拦截器的list集合
+     *
+     * @param interceptors 拦截器的list
+     * @return
+     */
+    public final Configurator withInterceptors(ArrayList<Interceptor> interceptors) {
+        INTERCEPTORS.addAll(interceptors);
+        LATTE_CONFIGS.put(ConfigKeys.INTERCEPTOR, INTERCEPTORS);
+        return this;
+    }
+
+    /**
+     * 检查配置是否完成
+     */
     private void checkConfiguration() {
-        final boolean isReady = (boolean) LATTE_CONFIGS.get(ConfigType.CONFIG_READY.name());
+        final boolean isReady = (boolean) LATTE_CONFIGS.get(ConfigKeys.CONFIG_READY.name());
         if (!isReady) {
             throw new RuntimeException("Configuration is not ready,call configure");
         }
     }
 
-    @SuppressWarnings("unchecked")
-    final <T> T getConfiguration(Enum<ConfigType> key) {
+    /**
+     * 配置信息
+     *
+     * @param key 根据key获取
+     * @param <T> 泛型
+     * @return 返回泛型
+     */
+    final <T> T getConfiguration(Object key) {
         checkConfiguration();
-        return (T) LATTE_CONFIGS.get(key.name());
+        return (T) LATTE_CONFIGS.get(key);
     }
 }

@@ -3,7 +3,7 @@ package com.lzhb.latte.net.rx;
 import android.content.Context;
 
 import com.lzhb.latte.net.RestCreator;
-import com.lzhb.latte.ui.LoaderStyle;
+import com.lzhb.latte.ui.loader.LoaderStyle;
 
 import java.io.File;
 import java.util.Map;

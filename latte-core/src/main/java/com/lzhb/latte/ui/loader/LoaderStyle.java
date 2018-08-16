@@ -1,4 +1,4 @@
-package com.lzhb.latte.ui;
+package com.lzhb.latte.ui.loader;
 
 /**
  * author: Lzhb

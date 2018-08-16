@@ -6,8 +6,7 @@ import com.lzhb.latte.net.callback.IError;
 import com.lzhb.latte.net.callback.IFailure;
 import com.lzhb.latte.net.callback.IRequest;
 import com.lzhb.latte.net.callback.ISuccess;
-import com.lzhb.latte.ui.LatteLoader;
-import com.lzhb.latte.ui.LoaderStyle;
+import com.lzhb.latte.ui.loader.LoaderStyle;
 
 import java.io.File;
 import java.util.Map;

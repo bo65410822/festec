@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatTextView;
 import android.view.View;
+import android.widget.Toast;
 
 import com.lzhb.latte.ec.R2;
 import com.lzhb.latte.delegates.LatteDelegate;
@@ -34,13 +35,13 @@ public class LauncherDelegate extends LatteDelegate implements ITimerListener {
 
     @OnClick(R2.id.tv_launcher_timer)
     void onClickTimerView() {
-
+        Toast.makeText(getContext(), "跳转", Toast.LENGTH_SHORT).show();
     }
 
     private void initTimer() {
         mTimer = new Timer();
         final BaseTimerTask task = new BaseTimerTask(this);
-        mTimer.schedule(task, 0, 1000);
+        mTimer.schedule(task, 500, 1000);
     }
 
     @Override

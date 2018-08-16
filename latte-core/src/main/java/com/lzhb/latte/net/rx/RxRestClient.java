@@ -3,18 +3,9 @@ package com.lzhb.latte.net.rx;
 import android.content.Context;
 
 import com.lzhb.latte.net.HttpMethod;
-import com.lzhb.latte.net.RestClient;
-import com.lzhb.latte.net.RestClientBuilder;
 import com.lzhb.latte.net.RestCreator;
-import com.lzhb.latte.net.RestService;
-import com.lzhb.latte.net.callback.IError;
-import com.lzhb.latte.net.callback.IFailure;
-import com.lzhb.latte.net.callback.IRequest;
-import com.lzhb.latte.net.callback.ISuccess;
-import com.lzhb.latte.net.callback.RequestCallbacks;
-import com.lzhb.latte.net.download.DownLoadHandler;
-import com.lzhb.latte.ui.LatteLoader;
-import com.lzhb.latte.ui.LoaderStyle;
+import com.lzhb.latte.ui.loader.LatteLoader;
+import com.lzhb.latte.ui.loader.LoaderStyle;
 
 import java.io.File;
 import java.util.Map;
@@ -25,8 +16,6 @@ import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
 
 /**
  * author: Lzhb

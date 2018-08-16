@@ -7,6 +7,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.joanzapata.iconify.Iconify;
+import com.joanzapata.iconify.fonts.FontAwesomeModule;
+import com.joanzapata.iconify.fonts.IoniconsModule;
 import com.lzhb.latte.activities.ProxyActivity;
 
 import butterknife.ButterKnife;
@@ -21,7 +24,7 @@ import me.yokeyword.fragmentation_swipeback.SwipeBackFragment;
 
 public abstract class BaseDelegate extends SwipeBackFragment {
 
-    private Unbinder mUnbinder;
+    private Unbinder mUnbind;
 
     public abstract Object setLayout();
 
@@ -38,7 +41,7 @@ public abstract class BaseDelegate extends SwipeBackFragment {
         } else {
             throw new ClassCastException("setLayout() type must be int or View !");
         }
-        mUnbinder = ButterKnife.bind(this, rootView);
+        mUnbind = ButterKnife.bind(this, rootView);
         onBindView(savedInstanceState, rootView);
         return rootView;
     }
@@ -50,8 +53,8 @@ public abstract class BaseDelegate extends SwipeBackFragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (mUnbinder != null) {
-            mUnbinder.unbind();
+        if (mUnbind != null) {
+            mUnbind.unbind();
         }
     }
 }

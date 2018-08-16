@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">latteEC</string>
+    <string name="register_ec">注册</string>
+    <string name="name_ec">姓名</string>
+    <string name="email_ec">邮箱</string>
+    <string name="phone_ec">手机</string>
+    <string name="password_ec">密码</string>
+    <string name="confirm_ec">确认密码</string>
+    <string name="login_ec">登陆</string>
+    <string name="account_ec">请输入账号/邮箱/手机号</string>
+
 </resources>

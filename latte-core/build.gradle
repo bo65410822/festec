@@ -50,6 +50,16 @@ dependencies {
     compile 'com.alibaba:fastjson:1.2.49'
     compile 'com.alibaba:fastjson:1.1.70.android'
     compile 'com.bigkoo:convenientbanner:2.0.5'
+
+
     //noinspection GradleCompatible
     compile 'com.android.support:recyclerview-v7:27.1.1'
+    //noinspection GradleCompatible
+    compile 'com.android.support:support-v4:27.1.1'
+    //noinspection GradleCompatible
+    compile 'com.android.support:design:27.1.1'
+
+    //字体图标
+    compile 'com.joanzapata.iconify:android-iconify-ionicons:2.2.2'
+    compile 'com.joanzapata.iconify:android-iconify-fontawesome:2.2.2'
 }

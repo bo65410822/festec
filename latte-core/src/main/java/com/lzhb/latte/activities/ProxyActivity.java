@@ -5,6 +5,9 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.ContentFrameLayout;
 
+import com.joanzapata.iconify.Iconify;
+import com.joanzapata.iconify.fonts.FontAwesomeModule;
+import com.joanzapata.iconify.fonts.IoniconsModule;
 import com.lzhb.latte.R;
 import com.lzhb.latte.delegates.LatteDelegate;
 
@@ -23,6 +26,7 @@ public abstract class ProxyActivity extends SupportActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        initInfo();
         initContainer(savedInstanceState);
     }
 
@@ -40,5 +44,11 @@ public abstract class ProxyActivity extends SupportActivity {
         super.onDestroy();
         System.gc();
         System.runFinalization();
+    }
+
+    void initInfo() {
+        Iconify
+                .with(new FontAwesomeModule())
+                .with(new IoniconsModule());
     }
 }

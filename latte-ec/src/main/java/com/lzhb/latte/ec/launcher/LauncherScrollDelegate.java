@@ -2,6 +2,7 @@ package com.lzhb.latte.ec.launcher;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.View;
 
 import com.bigkoo.convenientbanner.ConvenientBanner;
@@ -9,6 +10,8 @@ import com.bigkoo.convenientbanner.listener.OnItemClickListener;
 import com.lzhb.latte.delegates.LatteDelegate;
 import com.lzhb.latte.ec.R;
 import com.lzhb.latte.ui.launcher.LauncherHolderCreator;
+import com.lzhb.latte.ui.launcher.ScrollLauncherTag;
+import com.lzhb.latte.util.storage.LattePreference;
 
 import java.util.ArrayList;
 
@@ -19,7 +22,7 @@ import java.util.ArrayList;
  */
 
 public class LauncherScrollDelegate extends LatteDelegate implements OnItemClickListener {
-
+    private static final String TAG = LauncherScrollDelegate.class.getPackage().getName();
     private ConvenientBanner<Integer> mConvenientBanner = null;
     private static final ArrayList<Integer> INTEGERS = new ArrayList<>();
 
@@ -39,7 +42,7 @@ public class LauncherScrollDelegate extends LatteDelegate implements OnItemClick
 
     @Override
     public Object setLayout() {
-        mConvenientBanner = new ConvenientBanner<Integer>(getContext());
+        mConvenientBanner = new ConvenientBanner<>(getContext());
         return mConvenientBanner;
     }
 
@@ -50,6 +53,10 @@ public class LauncherScrollDelegate extends LatteDelegate implements OnItemClick
 
     @Override
     public void onItemClick(int position) {
-
+        //如果点击的是最后一个，再次打开APP就不会出现导航界面
+        if (position == INTEGERS.size() - 1) {
+            Log.i(TAG, "onItemClick: Click the last one!");
+            LattePreference.setAppFlag(ScrollLauncherTag.HAS_FIRST_LAUNCHER_APP.name(), true);
+        }
     }
 }

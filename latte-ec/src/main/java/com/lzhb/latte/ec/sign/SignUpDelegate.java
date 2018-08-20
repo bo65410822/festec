@@ -42,19 +42,21 @@ public class SignUpDelegate extends LatteDelegate {
     @OnClick(R2.id.btn_register)
     void onClickSignUp() {
         if (checkForm()) {
-//            RestClient.builder()
-//                    .url("sign_up")
-//                    .param("", "")
-//                    .success(new ISuccess() {
-//                        @Override
-//                        public void onSuccess(String response) {
-//                            Log.i(TAG, "onSuccess: ");
-//                        }
-//                    })
-//                    .build()
-//                    .post();
-
-            Toast.makeText(getContext(), "验证通过", Toast.LENGTH_SHORT).show();
+            RestClient.builder()
+                    .url("sign_up")
+                    .param("name", name)
+                    .param("email", email)
+                    .param("phone", phone)
+                    .param("password", password)
+                    .success(new ISuccess() {
+                        @Override
+                        public void onSuccess(String response) {
+                            Log.i(TAG, "onSuccess: ");
+                            SignHandler.onSignUp(response);
+                        }
+                    })
+                    .build()
+                    .post();
         }
     }
 
@@ -63,12 +65,14 @@ public class SignUpDelegate extends LatteDelegate {
         start(new SignInDelegate(), SINGLETASK);
     }
 
+    private String name, email, phone, password, confirm;
+
     private boolean checkForm() {
-        final String name = mName.getText().toString();
-        final String email = mEmail.getText().toString();
-        final String phone = mPhone.getText().toString();
-        final String password = mPassword.getText().toString();
-        final String confirm = mConfirm.getText().toString();
+        name = mName.getText().toString();
+        email = mEmail.getText().toString();
+        phone = mPhone.getText().toString();
+        password = mPassword.getText().toString();
+        confirm = mConfirm.getText().toString();
         boolean isPass = true;
         if (name.isEmpty()) {
             mName.setError("请输入姓名");

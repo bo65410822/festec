@@ -60,7 +60,7 @@ public class RestCreator {
         private static final ArrayList<Interceptor> INTERCEPTORS = Latte.getConfiguration(ConfigKeys.INTERCEPTOR);
         private static OkHttpClient.Builder BUILDER = new OkHttpClient.Builder();
 
-        private static OkHttpClient.Builder addInterceptor() {
+        private static OkHttpClient.Builder addInterceptor() { 
             if (INTERCEPTORS != null && !INTERCEPTORS.isEmpty()) {
                 for (Interceptor interceptor : INTERCEPTORS) {
                     Log.i(TAG, "addInterceptor: 添加拦截器");

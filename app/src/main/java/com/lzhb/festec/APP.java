@@ -2,7 +2,11 @@ package com.lzhb.festec;
 
 import android.app.Application;
 
+import com.facebook.stetho.DumperPluginsProvider;
+import com.facebook.stetho.Stetho;
+import com.facebook.stetho.dumpapp.DumperPlugin;
 import com.lzhb.latte.app.Latte;
+import com.lzhb.latte.ec.database.DatabaseManager;
 import com.lzhb.latte.net.interceptors.DebugInterceptor;
 
 /**
@@ -21,5 +25,14 @@ public class APP extends Application {
 //                .withInterceptor(new DebugInterceptor("index.jsp", R.raw.test))
                 .configure()
         ;
+        initStetho();
+        DatabaseManager.getInstance().init(this);
+    }
+
+    private void initStetho() {
+        Stetho.initialize(Stetho.newInitializerBuilder(this)
+                .enableDumpapp(Stetho.defaultDumperPluginsProvider(this))
+                .enableWebKitInspector(Stetho.defaultInspectorModulesProvider(this))
+                .build());
     }
 }

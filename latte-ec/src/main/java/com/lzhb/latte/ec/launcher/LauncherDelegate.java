@@ -1,13 +1,18 @@
 package com.lzhb.latte.ec.launcher;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatTextView;
 import android.view.View;
 
+import com.lzhb.latte.app.AccountManager;
+import com.lzhb.latte.app.IUserChecker;
 import com.lzhb.latte.ec.R2;
 import com.lzhb.latte.delegates.LatteDelegate;
 import com.lzhb.latte.ec.R;
+import com.lzhb.latte.ui.launcher.ILauncherListener;
+import com.lzhb.latte.ui.launcher.OnLauncherFinishTag;
 import com.lzhb.latte.ui.launcher.ScrollLauncherTag;
 import com.lzhb.latte.util.storage.LattePreference;
 import com.lzhb.latte.util.timer.BaseTimerTask;
@@ -33,6 +38,16 @@ public class LauncherDelegate extends LatteDelegate implements ITimerListener {
     private Timer mTimer = null;
 
     private int mCount = 3;
+
+    private ILauncherListener mILauncherListener;
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        if (activity instanceof ILauncherListener) {
+            mILauncherListener = (ILauncherListener) activity;
+        }
+    }
 
     @OnClick(R2.id.tv_launcher_timer)
     void onClickTimerView() {
@@ -62,9 +77,23 @@ public class LauncherDelegate extends LatteDelegate implements ITimerListener {
     //判断是否显示滑动界面（是否为第一次启动APP）
     private void checkIsShowScroll() {
         if (!LattePreference.getAppFlag(ScrollLauncherTag.HAS_FIRST_LAUNCHER_APP.name())) {
-            start(new LauncherScrollDelegate(), SINGLETASK);
+            startWithPop(new LauncherScrollDelegate());
         } else {
             //检查用户是否登陆的APP
+            AccountManager.checkAccount(new IUserChecker() {
+                @Override
+                public void onSignIn() {
+                    if (mILauncherListener != null) {
+                        mILauncherListener.onLauncherFinish(OnLauncherFinishTag.SIGNED);
+                    }
+                }
+                @Override
+                public void onNotSignIn() {
+                    if (mILauncherListener != null) {
+                        mILauncherListener.onLauncherFinish(OnLauncherFinishTag.NOT_SIGNED);
+                    }
+                }
+            });
         }
     }
 

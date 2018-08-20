@@ -1,5 +1,6 @@
 package com.lzhb.latte.ec.launcher;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -7,9 +8,13 @@ import android.view.View;
 
 import com.bigkoo.convenientbanner.ConvenientBanner;
 import com.bigkoo.convenientbanner.listener.OnItemClickListener;
+import com.lzhb.latte.app.AccountManager;
+import com.lzhb.latte.app.IUserChecker;
 import com.lzhb.latte.delegates.LatteDelegate;
 import com.lzhb.latte.ec.R;
+import com.lzhb.latte.ui.launcher.ILauncherListener;
 import com.lzhb.latte.ui.launcher.LauncherHolderCreator;
+import com.lzhb.latte.ui.launcher.OnLauncherFinishTag;
 import com.lzhb.latte.ui.launcher.ScrollLauncherTag;
 import com.lzhb.latte.util.storage.LattePreference;
 
@@ -25,6 +30,16 @@ public class LauncherScrollDelegate extends LatteDelegate implements OnItemClick
     private static final String TAG = LauncherScrollDelegate.class.getPackage().getName();
     private ConvenientBanner<Integer> mConvenientBanner = null;
     private static final ArrayList<Integer> INTEGERS = new ArrayList<>();
+
+    private ILauncherListener mILauncherListener;
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        if (activity instanceof ILauncherListener) {
+            mILauncherListener = (ILauncherListener) activity;
+        }
+    }
 
     private void initBanner() {
         INTEGERS.add(R.mipmap.launcher_01);
@@ -57,6 +72,22 @@ public class LauncherScrollDelegate extends LatteDelegate implements OnItemClick
         if (position == INTEGERS.size() - 1) {
             Log.i(TAG, "onItemClick: Click the last one!");
             LattePreference.setAppFlag(ScrollLauncherTag.HAS_FIRST_LAUNCHER_APP.name(), true);
+            //检查用户是否登陆的APP
+            AccountManager.checkAccount(new IUserChecker() {
+                @Override
+                public void onSignIn() {
+                    if (mILauncherListener != null) {
+                        mILauncherListener.onLauncherFinish(OnLauncherFinishTag.SIGNED);
+                    }
+                }
+
+                @Override
+                public void onNotSignIn() {
+                    if (mILauncherListener != null) {
+                        mILauncherListener.onLauncherFinish(OnLauncherFinishTag.NOT_SIGNED);
+                    }
+                }
+            });
         }
     }
 }

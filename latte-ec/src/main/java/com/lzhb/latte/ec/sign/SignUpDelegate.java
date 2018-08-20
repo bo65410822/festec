@@ -1,5 +1,6 @@
 package com.lzhb.latte.ec.sign;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
@@ -12,6 +13,7 @@ import com.lzhb.latte.delegates.LatteDelegate;
 import com.lzhb.latte.ec.R;
 import com.lzhb.latte.ec.R2;
 import com.lzhb.latte.net.RestClient;
+import com.lzhb.latte.net.callback.IError;
 import com.lzhb.latte.net.callback.ISuccess;
 import com.lzhb.latte.util.LatteUtil;
 
@@ -39,11 +41,21 @@ public class SignUpDelegate extends LatteDelegate {
     @BindView(R2.id.edit_sign_up_confirm)
     TextInputEditText mConfirm = null;
 
+    private ISignListener mListener = null;
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        if (activity instanceof ISignListener) {
+            mListener = (ISignListener) activity;
+        }
+    }
+
     @OnClick(R2.id.btn_register)
     void onClickSignUp() {
         if (checkForm()) {
             RestClient.builder()
-                    .url("sign_up")
+                    .url("https://blog.csdn.net/c_24363/article/details/78200069")
                     .param("name", name)
                     .param("email", email)
                     .param("phone", phone)
@@ -51,8 +63,8 @@ public class SignUpDelegate extends LatteDelegate {
                     .success(new ISuccess() {
                         @Override
                         public void onSuccess(String response) {
-                            Log.i(TAG, "onSuccess: ");
-                            SignHandler.onSignUp(response);
+                            Log.i(TAG, "onSuccess: response = " + response);
+                            SignHandler.onSignUp(response, mListener);
                         }
                     })
                     .build()
@@ -80,7 +92,7 @@ public class SignUpDelegate extends LatteDelegate {
         } else {
             mName.setError(null);
         }
-        if (email.isEmpty() || Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+        if (email.isEmpty() || !Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             mEmail.setError("错误的邮箱格式");
             isPass = false;
         } else {

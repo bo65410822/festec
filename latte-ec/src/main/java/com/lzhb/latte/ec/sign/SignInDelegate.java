@@ -14,6 +14,8 @@ import com.lzhb.latte.ec.R2;
 import com.lzhb.latte.net.RestClient;
 import com.lzhb.latte.net.callback.IError;
 import com.lzhb.latte.net.callback.ISuccess;
+import com.lzhb.latte.wechat.LatteWeChat;
+import com.lzhb.latte.wechat.callbacks.IWeChatSignInCallback;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -61,7 +63,12 @@ public class SignInDelegate extends LatteDelegate {
 
     @OnClick(R2.id.sign_in_we_chat)
     void onClickWeChat() {
-        Toast.makeText(getContext(), "微信登陆", Toast.LENGTH_SHORT).show();
+        LatteWeChat.getInstance().onSignSuccess(new IWeChatSignInCallback() {
+            @Override
+            public void onSignInSuccess(String userInfo) {
+                //TODO 微信
+            }
+        }).signIn();
     }
 
     @OnClick(R2.id.tv_link_sign_up)
@@ -89,7 +96,6 @@ public class SignInDelegate extends LatteDelegate {
         }
         return isPass;
     }
-
 
     @Override
     public Object setLayout() {

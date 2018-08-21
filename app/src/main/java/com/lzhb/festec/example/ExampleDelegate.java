@@ -35,7 +35,6 @@ public class ExampleDelegate extends LatteDelegate {
         rxTestRestClient();
     }
 
-    //TODO retrofit 测试
     private void testRestClient() {
         RestClient.builder().url("http://192.168.0.69:8080/index.jsp")
 //                .param("", "")
@@ -63,7 +62,6 @@ public class ExampleDelegate extends LatteDelegate {
 
     }
 
-    //TODO rxjava + retrofit 测试
     private void rxTestRestClient() {
         final String url = "index.jsp";
         RxRestClient.builder()

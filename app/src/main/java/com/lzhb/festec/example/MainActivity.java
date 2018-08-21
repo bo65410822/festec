@@ -1,9 +1,12 @@
 package com.lzhb.festec.example;
 
 
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.widget.Toast;
 
 import com.lzhb.latte.activities.ProxyActivity;
+import com.lzhb.latte.app.Latte;
 import com.lzhb.latte.delegates.LatteDelegate;
 import com.lzhb.latte.ec.launcher.LauncherDelegate;
 import com.lzhb.latte.ec.sign.ISignListener;
@@ -14,6 +17,13 @@ import com.lzhb.latte.ui.launcher.OnLauncherFinishTag;
 
 public class MainActivity extends ProxyActivity implements
         ISignListener, ILauncherListener {
+
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Latte.getConfigurator().withActivity(this);
+    }
 
     @Override
     public LatteDelegate setRootDelegate() {

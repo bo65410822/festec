@@ -27,8 +27,9 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     annotationProcessor project(':latte-compiler')
-    implementation project(':latte-core')
-    implementation project(':latte-ec')
+    compile project(':latte-ec')
     compile 'com.facebook.stetho:stetho:1.4.2'
     compile 'com.facebook.stetho:stetho-okhttp3:1.4.2'
+    annotationProcessor project(':latte-compiler')
+    compile project(path: ':latte-annotations')
 }

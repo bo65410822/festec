@@ -23,6 +23,8 @@ public class APP extends Application {
         Latte.init(this)
                 .withApiHost("http://192.168.56.1:8080/")
 //                .withInterceptor(new DebugInterceptor("index.jsp", R.raw.test))
+                .withWeChatAPPId("")
+                .withWeChatAPPSecret("")
                 .configure()
         ;
         initStetho();

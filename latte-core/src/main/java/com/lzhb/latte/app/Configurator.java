@@ -94,7 +94,7 @@ public class Configurator {
     }
 
     public final Configurator withActivity(Activity activity) {
-        LATTE_CONFIGS.put(ConfigKeys.AACTIVITY, activity);
+        LATTE_CONFIGS.put(ConfigKeys.ACTIVITY, activity);
         return this;
     }
 

@@ -32,7 +32,7 @@ public class LatteWeChat {
     }
 
     private LatteWeChat() {
-        final Activity activity = Latte.getConfiguration(ConfigKeys.AACTIVITY);
+        final Activity activity = Latte.getConfiguration(ConfigKeys.ACTIVITY);
         WXAPI = WXAPIFactory.createWXAPI(activity, APP_ID, true);
         WXAPI.registerApp(APP_ID);
     }

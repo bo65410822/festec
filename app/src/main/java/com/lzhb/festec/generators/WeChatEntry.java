@@ -8,6 +8,6 @@ import com.lzhb.latte_annotations.annotation.EntryGenerator;
  * created on: 2018/8/21 11:14
  * description:
  */
-@EntryGenerator(packageName = "com.lzhb.festec", entryTemplete = WXEntryTemplate.class)
+@EntryGenerator(packageName = "com.lzhb.festec", entryTemplate = WXEntryTemplate.class)
 public interface WeChatEntry {
 }

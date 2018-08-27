@@ -9,7 +9,7 @@ import com.lzhb.latte_annotations.annotation.AppRegisterGenerator;
  * created on: 2018/8/21 11:14
  * description:
  */
-@AppRegisterGenerator(packageName = "com.lzhb.festec", registerTemplete = AppRegisterTemplate.class)
+@AppRegisterGenerator(packageName = "com.lzhb.festec", registerTemplate = AppRegisterTemplate.class)
 public interface AppRegister {
 
 }

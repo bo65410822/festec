@@ -8,6 +8,6 @@ import com.lzhb.latte_annotations.annotation.PayEntryGenerator;
  * created on: 2018/8/21 11:14
  * description:
  */
-@PayEntryGenerator(packageName = "com.lzhb.festec", payEntryTemplete = WXPayEntryTemplate.class)
+@PayEntryGenerator(packageName = "com.lzhb.festec", payEntryTemplate = WXPayEntryTemplate.class)
 public interface WeChatPayEntry {
 }
